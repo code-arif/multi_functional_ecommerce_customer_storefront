@@ -85,7 +85,7 @@
                     </div>
                     <span
                         class="text-xs font-semibold text-gray-700 text-center line-clamp-2 group-hover:text-[#2E7D32] transition-colors">{{
-                        cat.name }}</span>
+                            cat.name }}</span>
                 </router-link>
             </div>
         </section>
