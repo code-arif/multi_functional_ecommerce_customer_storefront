@@ -10,26 +10,26 @@ import SearchPage from "@/pages/shop/SearchPage.vue";
 import AffiliatePage from "@/pages/shop/AffiliatePage.vue";
 import CartPage from "@/pages/CartPage.vue"; // done
 import CheckoutPage from "@/pages/CheckoutPage.vue"; // done
-import OrderSuccessPage from "@/pages/OrderSuccessPage.vue";
+import OrderSuccessPage from "@/pages/OrderSuccessPage.vue"; // done
 import TrackOrderPage from "@/pages/TrackOrderPage.vue";
 
 // Auth
-import LoginPage from "@/pages/auth/LoginPage.vue";
-import RegisterPage from "@/pages/auth/RegisterPage.vue";
+import LoginPage from "@/pages/auth/LoginPage.vue"; // done
+import RegisterPage from "@/pages/auth/RegisterPage.vue"; // done
 
 // CMS
 import CmsPage from "@/pages/CmsPage.vue";
 
 // Account
-import AccountLayout from "@/pages/account/AccountLayout.vue";
-import ProfilePage from "@/pages/account/ProfilePage.vue";
-import OrdersPage from "@/pages/account/OrdersPage.vue";
-import OrderDetailPage from "@/pages/account/OrderDetailPage.vue";
-import WishlistPage from "@/pages/account/WishlistPage.vue";
-import AddressesPage from "@/pages/account/AddressesPage.vue";
+import AccountLayout from "@/pages/account/AccountLayout.vue"; // done
+import ProfilePage from "@/pages/account/ProfilePage.vue"; // done
+import OrdersPage from "@/pages/account/OrdersPage.vue"; // done
+import OrderDetailPage from "@/pages/account/OrderDetailPage.vue"; // done
+import WishlistPage from "@/pages/account/WishlistPage.vue"; // done
+import AddressesPage from "@/pages/account/AddressesPage.vue"; // done
 
 // 404
-import NotFoundPage from "@/pages/NotFoundPage.vue";
+import NotFoundPage from "@/pages/NotFoundPage.vue"; // done
 
 const routes = [
   { path: "/", name: "home", component: HomePage },
