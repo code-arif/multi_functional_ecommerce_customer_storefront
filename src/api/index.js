@@ -1,133 +1,131 @@
-import axios from 'axios'
-import { useToast } from 'vue-toastification'
+import client from "./client";
 
-const BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000/api/v1'
-
-export const client = axios.create({ baseURL: BASE, headers: { Accept: 'application/json' }, timeout: 20000 })
-
-client.interceptors.request.use(cfg => {
-  const t = localStorage.getItem('admin_token')
-  if (t) cfg.headers.Authorization = `Bearer ${t}`
-  return cfg
-})
-
-client.interceptors.response.use(r => r, err => {
-  if (err.response?.status === 401) { localStorage.removeItem('admin_token'); window.location.href = '/login' }
-  if (err.response?.status === 403)  useToast().error('Access denied.')
-  if (err.response?.status === 500)  useToast().error('Server error. Please try again.')
-  return Promise.reject(err)
-})
-
-// Auth
+// ─── Auth ─────────────────────────────────────────────────────
 export const authApi = {
-  login:  d => client.post('/auth/admin/login', d),
-  logout: () => client.post('/auth/logout'),
-  me:     () => client.get('/auth/me'),
-}
+  register: (data) => client.post("/auth/register", data),
+  login: (data) => client.post("/auth/login", data),
+  logout: () => client.post("/auth/logout"),
+  logoutAll: () => client.post("/auth/logout-all"),
+  me: () => client.get("/auth/me"),
+  updateProfile: (data) => client.put("/auth/profile", data),
+  updateAvatar: (form) =>
+    client.post("/auth/avatar", form, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }),
+};
 
-// Dashboard
-export const dashboardApi = { stats: () => client.get('/admin/dashboard') }
+// ─── Addresses ────────────────────────────────────────────────
+export const addressApi = {
+  list: () => client.get("/addresses"),
+  store: (data) => client.post("/addresses", data),
+  update: (id, d) => client.put(`/addresses/${id}`, d),
+  delete: (id) => client.delete(`/addresses/${id}`),
+};
 
-// Products
+// ─── Products ─────────────────────────────────────────────────
 export const productApi = {
-  list:        p => client.get('/admin/products', { params: p }),
-  show:        id => client.get(`/admin/products/${id}`),
-  store:       d => client.post('/admin/products', d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  update:      (id,d) => client.post(`/admin/products/${id}?_method=PUT`, d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  destroy:     id => client.delete(`/admin/products/${id}`),
-  uploadImage: f => client.post('/admin/products/upload-image', f, { headers: { 'Content-Type': 'multipart/form-data' } }),
-}
+  list: (params) => client.get("/products", { params }),
+  show: (slug) => client.get(`/products/${slug}`),
+  related: (slug) => client.get(`/products/${slug}/related`),
+  featured: (limit) => client.get("/products/featured", { params: { limit } }),
+  newArrivals: (limit) =>
+    client.get("/products/new-arrivals", { params: { limit } }),
+  bestsellers: (limit) =>
+    client.get("/products/bestsellers", { params: { limit } }),
+  reviews: (slug, p) => client.get(`/products/${slug}/reviews`, { params: p }),
+};
 
-// Categories
+// ─── Categories ───────────────────────────────────────────────
 export const categoryApi = {
-  list:    p  => client.get('/admin/categories', { params: p }),
-  store:   d  => client.post('/admin/categories', d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  update:  (id,d) => client.post(`/admin/categories/${id}?_method=PUT`, d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  destroy: id => client.delete(`/admin/categories/${id}`),
-}
+  tree: () => client.get("/categories"),
+  show: (slug) => client.get(`/categories/${slug}`),
+};
 
-// Brands
-export const brandApi = {
-  list:    p  => client.get('/admin/brands', { params: p }),
-  store:   d  => client.post('/admin/brands', d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  update:  (id,d) => client.post(`/admin/brands/${id}?_method=PUT`, d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  destroy: id => client.delete(`/admin/brands/${id}`),
-}
+// ─── Search ───────────────────────────────────────────────────
+export const searchApi = {
+  search: (params) => client.get("/search", { params }),
+  suggestions: (q) => client.get("/search/suggestions", { params: { q } }),
+  priceRange: () => client.get("/search/price-range"),
+  facets: (q) => client.get("/search/facets", { params: { q } }),
+};
 
-// Orders
+// ─── Cart ─────────────────────────────────────────────────────
+export const cartApi = {
+  get: () => client.get("/cart"),
+  addItem: (data) => client.post("/cart/items", data),
+  updateItem: (itemId, qty) =>
+    client.put(`/cart/items/${itemId}`, { quantity: qty }),
+  removeItem: (itemId) => client.delete(`/cart/items/${itemId}`),
+  clear: () => client.delete("/cart"),
+  applyCoupon: (code) => client.post("/cart/coupon", { code }),
+  removeCoupon: () => client.delete("/cart/coupon"),
+};
+
+// ─── Checkout ─────────────────────────────────────────────────
+export const checkoutApi = {
+  process: (data) => client.post("/checkout", data),
+  shippingCost: (subtotal) =>
+    client.get("/checkout/shipping-cost", { params: { subtotal } }),
+};
+
+// ─── Orders ───────────────────────────────────────────────────
 export const orderApi = {
-  list:         p        => client.get('/admin/orders', { params: p }),
-  show:         id       => client.get(`/admin/orders/${id}`),
-  updateStatus: (id,d)   => client.patch(`/admin/orders/${id}/status`, d),
-  updateNote:   (id,d)   => client.patch(`/admin/orders/${id}/note`, d),
-}
+  list: (params) => client.get("/orders", { params }),
+  show: (number) => client.get(`/orders/${number}`),
+  cancel: (number) => client.post(`/orders/${number}/cancel`),
+  trackGuest: (token) => client.get(`/orders/track/${token}`),
+};
 
-// Coupons
-export const couponApi = {
-  list:    p      => client.get('/admin/coupons', { params: p }),
-  store:   d      => client.post('/admin/coupons', d),
-  update:  (id,d) => client.put(`/admin/coupons/${id}`, d),
-  destroy: id     => client.delete(`/admin/coupons/${id}`),
-}
+// ─── Wishlist ─────────────────────────────────────────────────
+export const wishlistApi = {
+  list: () => client.get("/wishlist"),
+  toggle: (id) => client.post("/wishlist", { product_id: id }),
+  moveToCart: (id) => client.post("/wishlist/move-to-cart", { product_id: id }),
+};
 
-// Reviews
+// ─── Reviews ──────────────────────────────────────────────────
 export const reviewApi = {
-  list:    p  => client.get('/admin/reviews', { params: p }),
-  approve: id => client.post(`/admin/reviews/${id}/approve`),
-  reject:  id => client.post(`/admin/reviews/${id}/reject`),
-  destroy: id => client.delete(`/admin/reviews/${id}`),
-}
+  store: (data) =>
+    client.post("/reviews", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    }),
+};
 
-// Banners
-export const bannerApi = {
-  list:    () => client.get('/admin/banners'),
-  store:   d  => client.post('/admin/banners', d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  update:  (id,d) => client.post(`/admin/banners/${id}?_method=PUT`, d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  destroy: id => client.delete(`/admin/banners/${id}`),
-}
-
-// Affiliate
-export const affiliateApi = {
-  list:    p      => client.get('/admin/affiliate-products', { params: p }),
-  store:   d      => client.post('/admin/affiliate-products', d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  update:  (id,d) => client.post(`/admin/affiliate-products/${id}?_method=PUT`, d, { headers: { 'Content-Type': 'multipart/form-data' } }),
-  destroy: id     => client.delete(`/admin/affiliate-products/${id}`),
-}
-
-// CMS Pages
+// ─── CMS / Content ────────────────────────────────────────────
 export const cmsApi = {
-  list:    () => client.get('/admin/pages'),
-  store:   d  => client.post('/admin/pages', d),
-  update:  (id,d) => client.put(`/admin/pages/${id}`, d),
-  destroy: id => client.delete(`/admin/pages/${id}`),
-}
+  homepage: () => client.get("/cms/homepage"),
+  settings: () => client.get("/cms/settings"),
+  pages: () => client.get("/cms/pages"),
+  page: (slug) => client.get(`/cms/pages/${slug}`),
+  banners: (pos) => client.get(`/cms/banners/${pos}`),
+};
 
-// Settings
-export const settingsApi = {
-  list:   ()    => client.get('/admin/settings'),
-  update: d     => client.post('/admin/settings', d),
-  upload: (k,f) => { const fd=new FormData(); fd.append('key',k); fd.append('file',f); return client.post('/admin/settings/upload', fd, { headers: { 'Content-Type': 'multipart/form-data' } }) },
-}
+// ─── SEO ──────────────────────────────────────────────────────
+export const seoApi = {
+  homepage: () => client.get("/seo/homepage"),
+  product: (slug) => client.get(`/seo/product/${slug}`),
+  category: (slug) => client.get(`/seo/category/${slug}`),
+  page: (slug) => client.get(`/seo/page/${slug}`),
+};
 
-// Users
-export const userApi = {
-  list:         p      => client.get('/admin/users', { params: p }),
-  show:         id     => client.get(`/admin/users/${id}`),
-  updateStatus: (id,s) => client.patch(`/admin/users/${id}/status`, { status: s }),
-}
+// ─── Affiliate ────────────────────────────────────────────────
+export const affiliateApi = {
+  list: (params) => client.get("/affiliate", { params }),
+  show: (slug) => client.get(`/affiliate/${slug}`),
+  click: (slug) => client.post(`/affiliate/${slug}/click`),
+};
 
-// Reports
-export const reportApi = {
-  sales:          p => client.get('/admin/reports/sales', { params: p }),
-  topProducts:    p => client.get('/admin/reports/top-products', { params: p }),
-  ordersByStatus: () => client.get('/admin/reports/orders-by-status'),
-  customerGrowth: p => client.get('/admin/reports/customer-growth', { params: p }),
-}
+// ─── Notifications ────────────────────────────────────────────
+export const notificationApi = {
+  list: () => client.get("/notifications"),
+  read: (id) => client.post(`/notifications/${id}/read`),
+  readAll: () => client.post("/notifications/read-all"),
+};
 
-// Chat
+// ─── Chat ─────────────────────────────────────────────────────
 export const chatApi = {
-  rooms:       p       => client.get('/admin/chat/rooms', { params: p }),
-  messages:    (id,p)  => client.get(`/admin/chat/room/${id}/messages`, { params: p }),
-  send:        (id,d)  => client.post(`/admin/chat/room/${id}/messages`, d),
-  close:       id      => client.post(`/admin/chat/room/${id}/close`),
-}
+  myRoom: () => client.get("/chat/room"),
+  messages: (roomId, p) =>
+    client.get(`/chat/room/${roomId}/messages`, { params: p }),
+  sendMessage: (roomId, d) => client.post(`/chat/room/${roomId}/messages`, d),
+};
