@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import Toast, { POSITION } from 'vue-toastification'
+import { createHead } from '@unhead/vue'
 import App from './App.vue'
 import router from './router'
 import 'vue-toastification/dist/index.css'
@@ -8,9 +9,34 @@ import './assets/css/main.css'
 
 const app   = createApp(App)
 const pinia = createPinia()
+const head  = createHead()
 
-app.use(pinia).use(router)
-app.use(Toast, { position: POSITION.TOP_RIGHT, timeout: 3000, maxToasts: 3 })
+app.use(pinia)
+app.use(router)
+app.use(head)
+app.use(Toast, {
+  position: POSITION.TOP_RIGHT,
+  timeout: 3500,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  maxToasts: 4,
+  newestOnTop: true,
+})
 
-import { useAuthStore } from './stores/auth'
-useAuthStore(pinia).fetchMe().then(() => app.mount('#app'))
+// ─── Bootstrap ────────────────────────────────────────────────
+import { useAuthStore }     from './stores/auth'
+import { useCartStore }     from './stores/cart'
+import { useSettingsStore } from './stores/settings'
+
+const auth     = useAuthStore(pinia)
+const cart     = useCartStore(pinia)
+const settings = useSettingsStore(pinia)
+
+Promise.all([
+  auth.fetchMe(),
+  cart.fetchCart(),
+  settings.fetchSettings(),
+]).then(() => {
+  app.mount('#app')
+})
