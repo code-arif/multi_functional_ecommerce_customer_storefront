@@ -2,13 +2,13 @@ import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 
 // Public
-import HomePage from "@/pages/HomePage.vue";
-import ShopPage from "@/pages/shop/ShopPage.vue";
-import ProductPage from "@/pages/shop/ProductPage.vue";
+import HomePage from "@/pages/HomePage.vue"; // done
+import ShopPage from "@/pages/shop/ShopPage.vue"; // done
+import ProductPage from "@/pages/shop/ProductPage.vue"; // done
 import CategoryPage from "@/pages/shop/CategoryPage.vue";
 import SearchPage from "@/pages/shop/SearchPage.vue";
 import AffiliatePage from "@/pages/shop/AffiliatePage.vue";
-import CartPage from "@/pages/CartPage.vue";
+import CartPage from "@/pages/CartPage.vue"; // done
 import CheckoutPage from "@/pages/CheckoutPage.vue";
 import OrderSuccessPage from "@/pages/OrderSuccessPage.vue";
 import TrackOrderPage from "@/pages/TrackOrderPage.vue";
