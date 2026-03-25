@@ -9,7 +9,7 @@ import CategoryPage from "@/pages/shop/CategoryPage.vue";
 import SearchPage from "@/pages/shop/SearchPage.vue";
 import AffiliatePage from "@/pages/shop/AffiliatePage.vue";
 import CartPage from "@/pages/CartPage.vue"; // done
-import CheckoutPage from "@/pages/CheckoutPage.vue";
+import CheckoutPage from "@/pages/CheckoutPage.vue"; // done
 import OrderSuccessPage from "@/pages/OrderSuccessPage.vue";
 import TrackOrderPage from "@/pages/TrackOrderPage.vue";
 
