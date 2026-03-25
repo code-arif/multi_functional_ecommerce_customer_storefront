@@ -1,116 +1,92 @@
 import { createRouter, createWebHistory } from "vue-router";
 import { useAuthStore } from "@/stores/auth";
 
+// Public
+import HomePage from "@/pages/HomePage.vue";
+import ShopPage from "@/pages/shop/ShopPage.vue";
+import ProductPage from "@/pages/shop/ProductPage.vue";
+import CategoryPage from "@/pages/shop/CategoryPage.vue";
+import SearchPage from "@/pages/shop/SearchPage.vue";
+import AffiliatePage from "@/pages/shop/AffiliatePage.vue";
+import CartPage from "@/pages/CartPage.vue";
+import CheckoutPage from "@/pages/CheckoutPage.vue";
+import OrderSuccessPage from "@/pages/OrderSuccessPage.vue";
+import TrackOrderPage from "@/pages/TrackOrderPage.vue";
+
+// Auth
+import LoginPage from "@/pages/auth/LoginPage.vue";
+import RegisterPage from "@/pages/auth/RegisterPage.vue";
+
+// CMS
+import CmsPage from "@/pages/CmsPage.vue";
+
+// Account
+import AccountLayout from "@/pages/account/AccountLayout.vue";
+import ProfilePage from "@/pages/account/ProfilePage.vue";
+import OrdersPage from "@/pages/account/OrdersPage.vue";
+import OrderDetailPage from "@/pages/account/OrderDetailPage.vue";
+import WishlistPage from "@/pages/account/WishlistPage.vue";
+import AddressesPage from "@/pages/account/AddressesPage.vue";
+
+// 404
+import NotFoundPage from "@/pages/NotFoundPage.vue";
+
 const routes = [
-  // ─── Public ───────────────────────────────────────────────
-  { path: "/", name: "home", component: () => import("@/pages/HomePage.vue") },
-  {
-    path: "/shop",
-    name: "shop",
-    component: () => import("@/pages/shop/ShopPage.vue"),
-  },
-  {
-    path: "/product/:slug",
-    name: "product",
-    component: () => import("@/pages/shop/ProductPage.vue"),
-  },
-  {
-    path: "/category/:slug",
-    name: "category",
-    component: () => import("@/pages/shop/CategoryPage.vue"),
-  },
-  {
-    path: "/search",
-    name: "search",
-    component: () => import("@/pages/shop/SearchPage.vue"),
-  },
-  {
-    path: "/affiliate",
-    name: "affiliate",
-    component: () => import("@/pages/shop/AffiliatePage.vue"),
-  },
-  {
-    path: "/cart",
-    name: "cart",
-    component: () => import("@/pages/CartPage.vue"),
-  },
-  {
-    path: "/checkout",
-    name: "checkout",
-    component: () => import("@/pages/CheckoutPage.vue"),
-  },
+  { path: "/", name: "home", component: HomePage },
+  { path: "/shop", name: "shop", component: ShopPage },
+  { path: "/product/:slug", name: "product", component: ProductPage },
+  { path: "/category/:slug", name: "category", component: CategoryPage },
+  { path: "/search", name: "search", component: SearchPage },
+  { path: "/affiliate", name: "affiliate", component: AffiliatePage },
+  { path: "/cart", name: "cart", component: CartPage },
+  { path: "/checkout", name: "checkout", component: CheckoutPage },
   {
     path: "/order-success/:number",
     name: "order-success",
-    component: () => import("@/pages/OrderSuccessPage.vue"),
+    component: OrderSuccessPage,
   },
-  {
-    path: "/track-order",
-    name: "track-order",
-    component: () => import("@/pages/TrackOrderPage.vue"),
-  },
+  { path: "/track-order", name: "track-order", component: TrackOrderPage },
 
-  // ─── Auth ─────────────────────────────────────────────────
+  // Auth
   {
     path: "/login",
     name: "login",
-    component: () => import("@/pages/auth/LoginPage.vue"),
+    component: LoginPage,
     meta: { guest: true },
   },
   {
     path: "/register",
     name: "register",
-    component: () => import("@/pages/auth/RegisterPage.vue"),
+    component: RegisterPage,
     meta: { guest: true },
   },
 
-  // ─── CMS Pages ────────────────────────────────────────────
-  {
-    path: "/page/:slug",
-    name: "cms-page",
-    component: () => import("@/pages/CmsPage.vue"),
-  },
+  // CMS
+  { path: "/page/:slug", name: "cms-page", component: CmsPage },
 
-  // ─── Protected Account ────────────────────────────────────
+  // Account
   {
     path: "/account",
-    component: () => import("@/pages/account/AccountLayout.vue"),
+    component: AccountLayout,
     meta: { requiresAuth: true },
     children: [
-      {
-        path: "",
-        name: "account",
-        component: () => import("@/pages/account/ProfilePage.vue"),
-      },
-      {
-        path: "orders",
-        name: "account-orders",
-        component: () => import("@/pages/account/OrdersPage.vue"),
-      },
+      { path: "", name: "account", component: ProfilePage },
+      { path: "orders", name: "account-orders", component: OrdersPage },
       {
         path: "orders/:number",
         name: "account-order-detail",
-        component: () => import("@/pages/account/OrderDetailPage.vue"),
+        component: OrderDetailPage,
       },
-      {
-        path: "wishlist",
-        name: "account-wishlist",
-        component: () => import("@/pages/account/WishlistPage.vue"),
-      },
+      { path: "wishlist", name: "account-wishlist", component: WishlistPage },
       {
         path: "addresses",
         name: "account-addresses",
-        component: () => import("@/pages/account/AddressesPage.vue"),
+        component: AddressesPage,
       },
     ],
   },
 
-  // ─── 404 ──────────────────────────────────────────────────
-  {
-    path: "/:pathMatch(.*)*",
-    name: "not-found",
-    component: () => import("@/pages/NotFoundPage.vue"),
-  },
+  { path: "/:pathMatch(.*)*", name: "not-found", component: NotFoundPage },
 ];
 
 const router = createRouter({
@@ -123,7 +99,6 @@ const router = createRouter({
   },
 });
 
-// ─── Navigation Guards ────────────────────────────────────────
 router.beforeEach((to, from, next) => {
   const auth = useAuthStore();
 
