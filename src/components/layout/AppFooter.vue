@@ -1,82 +1,86 @@
 <template>
     <footer class="bg-gray-900 text-white mt-16">
-        <!-- Main footer -->
-        <div class="container-app py-12">
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <!-- Main footer grid -->
+        <div class="app-container py-12">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
                 <!-- Brand -->
                 <div>
-                    <div class="flex items-center gap-2 mb-4">
-                        <div class="w-8 h-8 rounded-lg bg-[#4CAF50] flex items-center justify-center">
+                    <RouterLink to="/" class="flex items-center gap-2 mb-5">
+                        <div class="w-8 h-8 rounded-lg bg-primary-600 flex items-center justify-center">
                             <span class="text-white font-black text-sm">E</span>
                         </div>
-                        <span class="text-xl font-black">Eco<span class="text-[#4CAF50]">Shop</span></span>
-                    </div>
-                    <p class="text-gray-400 text-sm leading-relaxed mb-4">
-                        Your trusted online marketplace for quality products at the best prices. Fast delivery across
-                        Bangladesh.
+                        <span class="font-display font-700 text-lg">Eco<span class="text-primary-400">Shop</span></span>
+                    </RouterLink>
+                    <p class="text-gray-400 text-sm leading-relaxed mb-5">
+                        Your trusted online marketplace for quality products. Fast delivery across Bangladesh.
                     </p>
+                    <!-- Social links -->
                     <div class="flex gap-3">
-                        <a v-if="settings.socialLinks.facebook" :href="settings.socialLinks.facebook" target="_blank"
-                            class="social-icon">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" />
-                            </svg>
-                        </a>
-                        <a v-if="settings.socialLinks.instagram" :href="settings.socialLinks.instagram" target="_blank"
-                            class="social-icon">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
-                                <path
-                                    d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" />
-                            </svg>
-                        </a>
+                        <a v-if="ui.socialLinks.facebook" :href="ui.socialLinks.facebook" target="_blank" rel="noopener"
+                            class="social-link">f</a>
+                        <a v-if="ui.socialLinks.instagram" :href="ui.socialLinks.instagram" target="_blank"
+                            rel="noopener" class="social-link">in</a>
+                        <a v-if="ui.socialLinks.twitter" :href="ui.socialLinks.twitter" target="_blank" rel="noopener"
+                            class="social-link">tw</a>
+                        <a v-if="ui.socialLinks.youtube" :href="ui.socialLinks.youtube" target="_blank" rel="noopener"
+                            class="social-link">yt</a>
                     </div>
                 </div>
 
-                <!-- Quick Links -->
+                <!-- Quick links -->
                 <div>
-                    <h4 class="font-bold text-white mb-4">Quick Links</h4>
+                    <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Quick Links</h4>
                     <ul class="space-y-2">
                         <li v-for="link in quickLinks" :key="link.to">
-                            <router-link :to="link.to" class="footer-link">{{ link.label }}</router-link>
+                            <RouterLink :to="link.to"
+                                class="text-gray-400 text-sm hover:text-primary-400 transition-colors">
+                                {{ link.label }}
+                            </RouterLink>
                         </li>
                     </ul>
                 </div>
 
-                <!-- Customer Service -->
+                <!-- Customer service -->
                 <div>
-                    <h4 class="font-bold text-white mb-4">Customer Service</h4>
+                    <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Customer Service</h4>
                     <ul class="space-y-2">
                         <li v-for="page in cmsPages" :key="page.slug">
-                            <router-link :to="`/page/${page.slug}`" class="footer-link">{{ page.title }}</router-link>
+                            <RouterLink :to="`/page/${page.slug}`"
+                                class="text-gray-400 text-sm hover:text-primary-400 transition-colors">
+                                {{ page.title }}
+                            </RouterLink>
                         </li>
-                        <li><router-link to="/track-order" class="footer-link">Track My Order</router-link></li>
+                        <li>
+                            <RouterLink to="/track-order"
+                                class="text-gray-400 text-sm hover:text-primary-400 transition-colors">
+                                Track My Order
+                            </RouterLink>
+                        </li>
                     </ul>
                 </div>
 
                 <!-- Contact -->
                 <div>
-                    <h4 class="font-bold text-white mb-4">Contact Us</h4>
-                    <ul class="space-y-3 text-sm text-gray-400">
-                        <li v-if="settings.storePhone" class="flex items-center gap-2">
-                            <PhoneIcon class="w-4 h-4 text-[#4CAF50] shrink-0" />
-                            <span>{{ settings.storePhone }}</span>
+                    <h4 class="font-semibold text-white mb-4 text-sm uppercase tracking-wider">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li v-if="ui.storePhone" class="flex items-center gap-3 text-sm text-gray-400">
+                            <PhoneIcon class="w-4 h-4 text-primary-400 shrink-0" />
+                            {{ ui.storePhone }}
                         </li>
-                        <li v-if="settings.storeEmail" class="flex items-center gap-2">
-                            <EnvelopeIcon class="w-4 h-4 text-[#4CAF50] shrink-0" />
-                            <a :href="`mailto:${settings.storeEmail}`" class="hover:text-[#4CAF50] transition">{{
-                                settings.storeEmail }}</a>
+                        <li v-if="ui.storeEmail" class="flex items-center gap-3 text-sm text-gray-400">
+                            <EnvelopeIcon class="w-4 h-4 text-primary-400 shrink-0" />
+                            <a :href="`mailto:${ui.storeEmail}`" class="hover:text-primary-400 transition-colors">{{
+                                ui.storeEmail }}</a>
                         </li>
                     </ul>
-
                     <!-- Payment icons -->
                     <div class="mt-6">
-                        <p class="text-xs text-gray-500 mb-2">We Accept</p>
+                        <p class="text-xs text-gray-500 mb-2 uppercase tracking-wider">We Accept</p>
                         <div class="flex gap-2 flex-wrap">
-                            <div v-for="method in ['bKash', 'Nagad', 'COD']" :key="method"
-                                class="px-2.5 py-1 bg-gray-800 rounded text-xs text-gray-300 font-medium">{{ method }}
-                            </div>
+                            <span v-for="m in ['bKash', 'Nagad', 'COD']" :key="m"
+                                class="px-2.5 py-1 bg-gray-800 text-gray-300 text-xs font-medium rounded-lg">{{ m
+                                }}</span>
                         </div>
                     </div>
                 </div>
@@ -85,9 +89,10 @@
 
         <!-- Bottom bar -->
         <div class="border-t border-gray-800">
-            <div class="container-app py-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-                <p class="text-xs text-gray-500">© {{ year }} {{ settings.storeName }}. All rights reserved.</p>
-                <p class="text-xs text-gray-600">Made with ❤️ in Bangladesh</p>
+            <div
+                class="app-container py-4 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-500">
+                <p>© {{ year }} {{ ui.storeName }}. All rights reserved.</p>
+                <p>Made with ❤️ in Bangladesh</p>
             </div>
         </div>
     </footer>
@@ -95,36 +100,32 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
-import { useSettingsStore } from '@/stores/settings'
-import { cmsApi } from '@/api'
+import { useUiStore } from '@/stores/uiStore'
+import { cmsService } from '@/services/cmsService'
 import { PhoneIcon, EnvelopeIcon } from '@heroicons/vue/24/outline'
 
-const settings = useSettingsStore()
-const cmsPages = ref([])
+const ui = useUiStore()
 const year = computed(() => new Date().getFullYear())
+const cmsPages = ref([])
 
 const quickLinks = [
     { to: '/', label: 'Home' },
     { to: '/shop', label: 'Shop' },
-    { to: '/affiliate', label: 'Deals & Offers' },
+    { to: '/search', label: 'Deals & Offers' },
     { to: '/cart', label: 'My Cart' },
-    { to: '/account/orders', label: 'My Orders' },
+    { to: '/account/orders', label: 'My Orders' }
 ]
 
 onMounted(async () => {
     try {
-        const res = await cmsApi.pages()
-        cmsPages.value = res.data.data?.slice(0, 4) || []
+        const res = await cmsService.pages()
+        cmsPages.value = (res.data.data || []).slice(0, 4)
     } catch { }
 })
 </script>
 
 <style scoped>
-.footer-link {
-    @apply text-sm text-gray-400 hover:text-[#4CAF50] transition-colors;
-}
-
-.social-icon {
-    @apply w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 hover:bg-[#2E7D32] hover:text-white transition-colors;
+.social-link {
+    @apply w-8 h-8 rounded-lg bg-gray-800 flex items-center justify-center text-gray-400 text-xs font-bold uppercase hover:bg-primary-700 hover:text-white transition-all duration-200;
 }
 </style>
