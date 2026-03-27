@@ -45,7 +45,7 @@
                         <!-- Price -->
                         <div class="flex items-end gap-3">
                             <span class="font-display text-3xl font-800 text-primary-700">{{ formatPrice(displayPrice)
-                                }}</span>
+                            }}</span>
                             <span v-if="isOnSale" class="text-lg text-gray-400 line-through pb-0.5">{{
                                 formatPrice(originalPrice) }}</span>
                             <span v-if="discountPct > 0"
@@ -70,7 +70,7 @@
                                 :class="inStock ? 'bg-green-500' : 'bg-red-400'" />
                             <span class="text-sm font-semibold" :class="inStock ? 'text-green-700' : 'text-red-600'">
                                 {{ inStock ? (product.is_low_stock ? `Low Stock — Only ${stockQty} left` : 'In Stock') :
-                                'Out of Stock' }}
+                                    'Out of Stock' }}
                             </span>
                         </div>
 
@@ -149,7 +149,7 @@
                             <div class="flex items-start gap-8 mb-8 pb-8 border-b border-gray-100">
                                 <div class="text-center shrink-0">
                                     <p class="font-display text-5xl font-800 text-primary-700">{{ product.average_rating
-                                        }}</p>
+                                    }}</p>
                                     <StarRating :rating="product.average_rating" size="md"
                                         class="justify-center mt-1" />
                                     <p class="text-xs text-gray-400 mt-1">{{ product.total_reviews }} reviews</p>
@@ -228,8 +228,9 @@ import { useWishlistStore } from '@/stores/wishlistStore'
 import { useUiStore } from '@/stores/uiStore'
 import { discountPercent } from '@/utils/currency'
 
-const props = defineProps({ slug: { type: String, required: true } })
 const route = useRoute()
+const slug = computed(() => route.params.slug)
+
 const cart = useCartStore()
 const wishlist = useWishlistStore()
 const ui = useUiStore()
@@ -265,5 +266,8 @@ function ratingPct(r) {
     return Math.round((ratingCount(r) / total) * 100)
 }
 
-watch(() => props.slug, (slug) => { if (slug) fetch(slug) }, { immediate: true })
+// watch(() => props.slug, (slug) => { if (slug) fetch(slug) }, { immediate: true })
+watch(slug, (val) => {
+    if (val) fetch(val)
+}, { immediate: true })
 </script>

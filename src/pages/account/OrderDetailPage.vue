@@ -25,7 +25,7 @@
                 <h3 class="font-bold text-gray-900 mb-4">Items Ordered</h3>
                 <div class="space-y-3">
                     <div v-for="item in order.items" :key="item.id" class="flex items-center gap-4">
-                        <img :src="item.product_image ? `/storage/${item.product_image}` : ''"
+                        <img :src="item.product_image ? `/storage/${item.product_image}` : '/images/no_images.jpg'"
                             class="w-14 h-14 rounded-xl object-cover bg-gray-100 shrink-0" />
                         <div class="flex-1">
                             <p class="font-semibold text-gray-800 text-sm">{{ item.product_name }}</p>
@@ -79,7 +79,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { orderApi } from '@/api'
+import { orderApi } from '@/services/orderService'
 import { useSettingsStore } from '@/stores/settings'
 import { useToast } from 'vue-toastification'
 const route = useRoute(), router = useRouter(), settings = useSettingsStore(), toast = useToast()

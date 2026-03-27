@@ -18,7 +18,7 @@
                         <span class="badge" :class="statusBadge(order.status)">{{ order.status }}</span>
                     </div>
                     <p class="text-xs text-gray-400">{{ new Date(order.created_at).toLocaleDateString() }} · {{
-                        order.items?.length||0 }} items</p>
+                        order.items?.length || 0 }} items</p>
                 </div>
                 <div class="text-right shrink-0">
                     <p class="font-bold text-[#2E7D32]">{{ settings.formatPrice(order.total_amount) }}</p>
@@ -33,7 +33,7 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import AppPagination from '@/components/common/AppPagination.vue'
-import { orderApi } from '@/api'
+import { orderApi } from '@/services/orderService'
 import { useSettingsStore } from '@/stores/settings'
 const settings = useSettingsStore()
 const orders = ref([]), loading = ref(true), pagination = ref(null)
