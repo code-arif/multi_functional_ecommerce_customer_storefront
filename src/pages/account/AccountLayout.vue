@@ -37,8 +37,8 @@
     </DefaultLayout>
 </template>
 <script setup>
-import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-import { useAuthStore } from '@/stores/auth'
+import DefaultLayout from '../../layouts/DefaultLayout.vue';
+import { useAuthStore } from '@/stores/authStore'
 const auth = useAuthStore()
 const navLinks = [
     { to: '/account', icon: '👤', label: 'My Profile' },

@@ -10,5 +10,5 @@
 </template>
 
 <script setup>
-import DefaultLayout from '@/components/layout/DefaultLayout.vue'
+import DefaultLayout from '../layouts/DefaultLayout.vue';
 </script>

@@ -55,8 +55,8 @@
 </template>
 <script setup>
 import { ref, reactive } from 'vue'
-import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-import { useAuthStore } from '@/stores/auth'
+import DefaultLayout from '../../layouts/DefaultLayout.vue'
+import { useAuthStore } from '@/stores/authStore'
 const auth = useAuthStore()
 const form = reactive({ name: '', email: '', phone: '', password: '', password_confirmation: '' })
 const errors = ref({})

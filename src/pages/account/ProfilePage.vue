@@ -36,7 +36,7 @@
 
 <script setup>
 import { ref, reactive } from 'vue'
-import { useAuthStore } from '@/stores/auth'
+import { useAuthStore } from '@/stores/authStore'
 const auth = useAuthStore()
 const saving = ref(false)
 const form = reactive({ name: auth.user?.name || '', email: auth.user?.email || '', phone: auth.user?.phone || '', current_password: '', password: '', password_confirmation: '' })

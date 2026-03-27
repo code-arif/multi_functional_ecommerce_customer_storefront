@@ -113,8 +113,8 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-import { useCartStore } from '@/stores/cart'
+import DefaultLayout from '../layouts/DefaultLayout.vue'
+import { useCartStore } from '@/stores/cartStore'
 import { useSettingsStore } from '@/stores/settings'
 const cart = useCartStore(), settings = useSettingsStore()
 const couponCode = ref(''), applyingCoupon = ref(false)

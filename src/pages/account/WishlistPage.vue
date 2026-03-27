@@ -16,7 +16,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import ProductGrid from '@/components/product/ProductGrid.vue'
-import { useWishlistStore } from '@/stores/wishlist'
+import { useWishlistStore } from '@/stores/wishlistStore'
 const wishlist = useWishlistStore()
 onMounted(() => wishlist.fetchWishlist())
 </script>

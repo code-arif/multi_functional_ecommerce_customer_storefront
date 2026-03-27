@@ -57,8 +57,8 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-import { useAuthStore } from '@/stores/auth'
+import DefaultLayout from '../layouts/DefaultLayout.vue'
+import { useAuthStore } from '@/stores/authStore'
 import { useSettingsStore } from '@/stores/settings'
 import { orderApi } from '@/api'
 const route = useRoute(), auth = useAuthStore(), settings = useSettingsStore()

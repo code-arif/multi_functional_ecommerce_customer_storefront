@@ -22,7 +22,7 @@
                         <input type="radio" name="filter-cat" :value="cat.slug" v-model="localFilters.category"
                             @change="emit" class="accent-primary-700" />
                         <span class="text-sm text-gray-700 group-hover:text-primary-700 transition-colors">{{ cat.name
-                            }}</span>
+                        }}</span>
                     </label>
                 </div>
             </div>
@@ -87,7 +87,7 @@ const localFilters = reactive({
 
 watch(() => props.filters, (v) => Object.assign(localFilters, v), { deep: true })
 
-function emit() {
+function triggerUpdate() {
     emit('update', { ...localFilters })
 }
 </script>

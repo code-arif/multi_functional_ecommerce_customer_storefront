@@ -161,20 +161,21 @@ img {
     }
 
     /* ── Typography ── */
+    /* ── Typography ── */
     .heading-xl {
-        @apply font-display text-4xl md:text-5xl font-800 tracking-tight leading-tight;
+        @apply text-4xl md:text-5xl font-extrabold tracking-tight leading-tight;
     }
 
     .heading-lg {
-        @apply font-display text-3xl font-700 tracking-tight;
+        @apply text-3xl font-bold tracking-tight;
     }
 
     .heading-md {
-        @apply font-display text-2xl font-700 tracking-tight;
+        @apply text-2xl font-bold tracking-tight;
     }
 
     .heading-sm {
-        @apply text-lg font-700;
+        @apply text-lg font-semibold;
     }
 
     .section-title {

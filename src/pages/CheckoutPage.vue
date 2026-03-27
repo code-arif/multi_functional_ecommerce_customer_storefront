@@ -149,9 +149,9 @@
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import DefaultLayout from '@/components/layout/DefaultLayout.vue'
-import { useCartStore } from '@/stores/cart'
-import { useAuthStore } from '@/stores/auth'
+import DefaultLayout from '../layouts/DefaultLayout.vue';
+import { useCartStore } from '@/stores/cartStore'
+import { useAuthStore } from '@/stores/authStore'
 import { useSettingsStore } from '@/stores/settings'
 import { checkoutApi, addressApi } from '@/api'
 import { useToast } from 'vue-toastification'
