@@ -77,6 +77,24 @@
             </div>
         </section>
 
+        <!-- Top Banners -->
+        <section v-if="topBanners.length" class="app-container py-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <a v-for="banner in topBanners" :key="banner.id" :href="banner.link || '/shop'"
+                    class="relative block overflow-hidden rounded-2xl group">
+                    <img :src="banner.image_url" :alt="banner.title"
+                        class="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <div
+                        class="absolute inset-0 bg-gradient-to-r from-primary-900/60 to-transparent flex items-center px-6">
+                        <div>
+                            <h3 class="font-display text-white text-lg font-800">{{ banner.title }}</h3>
+                            <p v-if="banner.subtitle" class="text-white/80 text-sm mt-1">{{ banner.subtitle }}</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
         <!-- Feature bar -->
         <div class="border-y border-gray-100 bg-white">
             <div class="app-container">
@@ -113,6 +131,26 @@
             </div>
         </section>
 
+        <!-- Promotional Banners -->
+        <section v-if="promotionalBanners.length" class="app-container py-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                <a v-for="banner in promotionalBanners" :key="banner.id" :href="banner.link || '/shop'"
+                    class="relative block overflow-hidden rounded-2xl group cursor-pointer">
+                    <img :src="banner.image_url" :alt="banner.title"
+                        class="w-full h-44 object-cover group-hover:scale-105 transition-transform duration-700" />
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-5">
+                        <div>
+                            <h3 class="font-bold text-white text-base">{{ banner.title }}</h3>
+                            <span v-if="banner.button_text"
+                                class="inline-block mt-2 bg-white text-primary-700 text-xs font-bold px-4 py-1.5 rounded-lg">
+                                {{ banner.button_text }} →
+                            </span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </section>
+
         <!-- Featured Products -->
         <section class="app-container py-10">
             <div class="flex items-center justify-between mb-7">
@@ -139,7 +177,7 @@
                         <h2 class="font-display text-white text-2xl md:text-4xl font-800 mb-3">{{ midBanners[0].title }}
                         </h2>
                         <p v-if="midBanners[0].subtitle" class="text-white/80 mb-6 text-base">{{ midBanners[0].subtitle
-                            }}</p>
+                        }}</p>
                         <span
                             class="inline-flex items-center gap-2 bg-white text-primary-700 font-bold px-6 py-2.5 rounded-xl text-sm hover:bg-brand-pale transition-colors">
                             {{ midBanners[0].button_text || 'Shop Now' }} →
@@ -179,6 +217,29 @@
             </div>
         </section>
 
+        <!-- Bottom Banners -->
+        <section v-if="bottomBanners.length" class="app-container py-4">
+            <a :href="bottomBanners[0].link || '/shop'" class="relative block overflow-hidden rounded-2xl group">
+                <img :src="bottomBanners[0].image_url" :alt="bottomBanners[0].title"
+                    class="w-full h-40 md:h-56 object-cover group-hover:scale-105 transition-transform duration-700" />
+                <div
+                    class="absolute inset-0 bg-gradient-to-r from-primary-900/65 to-transparent flex items-center px-8 md:px-16">
+                    <div>
+                        <h2 class="font-display text-white text-xl md:text-3xl font-800 mb-2">
+                            {{ bottomBanners[0].title }}
+                        </h2>
+                        <p v-if="bottomBanners[0].subtitle" class="text-white/80 text-sm mb-4">
+                            {{ bottomBanners[0].subtitle }}
+                        </p>
+                        <span
+                            class="inline-flex items-center gap-2 bg-white text-primary-700 font-bold px-5 py-2 rounded-xl text-sm">
+                            {{ bottomBanners[0].button_text || 'Shop Now' }} →
+                        </span>
+                    </div>
+                </div>
+            </a>
+        </section>
+
         <!-- Why choose us -->
         <section class="app-container py-14">
             <h2 class="section-title text-center mb-10">Why Shop With Us?</h2>
@@ -212,6 +273,10 @@ import {
 const productStore = useProductStore()
 const sliders = ref([])
 const midBanners = ref([])
+const topBanners = ref([])
+const bottomBanners = ref([])
+const promotionalBanners = ref([])
+const sidebarBanners = ref([])
 const categories = ref([])
 const catsLoading = ref(true)
 const activeSlide = ref(0)
@@ -243,24 +308,38 @@ function prevSlide() { activeSlide.value = (activeSlide.value - 1 + Math.max(sli
 onMounted(async () => {
     await productStore.loadHomepageProducts()
 
-    const [homeRes, catRes] = await Promise.allSettled([
-        cmsService.homepage(),
-        categoryService.tree()
-    ])
+    const [bannerRes, topBannerRes, midBannerRes, bottomBannerRes, promoRes, catRes] =
+        await Promise.allSettled([
+            cmsService.banners('hero_slider'),
+            cmsService.banners('homepage_top'),
+            cmsService.banners('homepage_middle'),
+            cmsService.banners('homepage_bottom'),
+            cmsService.banners('promotional'),
+            categoryService.tree()
+        ])
 
-    if (homeRes.status === 'fulfilled') {
-        const d = homeRes.value.data.data
-        sliders.value = d.sliders || []
-        midBanners.value = d.mid_banners || []
-        if (sliders.value.length > 1) {
-            sliderTimer = setInterval(nextSlide, 5000)
-        }
-    }
+    if (bannerRes.status === 'fulfilled')
+        sliders.value = bannerRes.value.data.data || []
+
+    if (topBannerRes.status === 'fulfilled')
+        topBanners.value = topBannerRes.value.data.data || []
+
+    if (midBannerRes.status === 'fulfilled')
+        midBanners.value = midBannerRes.value.data.data || []
+
+    if (bottomBannerRes.status === 'fulfilled')
+        bottomBanners.value = bottomBannerRes.value.data.data || []
+
+    if (promoRes.status === 'fulfilled')
+        promotionalBanners.value = promoRes.value.data.data || []
 
     if (catRes.status === 'fulfilled') {
         categories.value = catRes.value.data.data || []
         catsLoading.value = false
     }
+
+    if (sliders.value.length > 1)
+        sliderTimer = setInterval(nextSlide, 5000)
 })
 
 onUnmounted(() => { if (sliderTimer) clearInterval(sliderTimer) })
