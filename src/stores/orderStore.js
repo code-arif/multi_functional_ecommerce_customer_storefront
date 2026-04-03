@@ -1,6 +1,6 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { orderService } from "@/services/orderService";
+import { orderApi } from "@/services/orderService";
 import { useToast } from "vue-toastification";
 
 export const useOrderStore = defineStore("order", () => {
@@ -12,7 +12,7 @@ export const useOrderStore = defineStore("order", () => {
   async function fetchOrders(page = 1) {
     loading.value = true;
     try {
-      const res = await orderService.list({ page, per_page: 15 });
+      const res = await orderApi.list({ page, per_page: 15 });
       orders.value = res.data.data || [];
       pagination.value = res.data.pagination;
     } finally {
@@ -23,7 +23,7 @@ export const useOrderStore = defineStore("order", () => {
   async function placeOrder(data) {
     placing.value = true;
     try {
-      const res = await orderService.checkout(data);
+      const res = await orderApi.checkout(data);
       return res.data.data;
     } catch (e) {
       useToast().error(e.response?.data?.message || "Failed to place order.");
@@ -35,7 +35,7 @@ export const useOrderStore = defineStore("order", () => {
 
   async function cancelOrder(orderNumber) {
     try {
-      await orderService.cancel(orderNumber);
+      await orderApi.cancel(orderNumber);
       useToast().success("Order cancelled successfully.");
       await fetchOrders();
     } catch (e) {

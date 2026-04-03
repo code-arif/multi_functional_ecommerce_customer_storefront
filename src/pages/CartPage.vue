@@ -1,6 +1,6 @@
 <template>
     <DefaultLayout>
-        <div class="container-app py-8">
+          <div class="container-app mx-auto px-4 py-10 max-w-7xl">
             <h1 class="text-2xl font-black text-gray-900 mb-8">Shopping Cart</h1>
 
             <div v-if="cart.isEmpty" class="text-center py-20">
@@ -116,6 +116,8 @@ import { ref, computed } from 'vue'
 import DefaultLayout from '../layouts/DefaultLayout.vue'
 import { useCartStore } from '@/stores/cartStore'
 import { useSettingsStore } from '@/stores/settings'
+
+
 const cart = useCartStore(), settings = useSettingsStore()
 const couponCode = ref(''), applyingCoupon = ref(false)
 const shippingFree = computed(() => cart.subtotal >= settings.freeShippingOver)
