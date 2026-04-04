@@ -248,15 +248,17 @@ async function placeOrder() {
 
   try {
     const order = await orderStore.placeOrder(form)
-
+    await cart.fetchCart()
     router.push({
       name: 'order-success',
-      params: { number: order.order_number }
+      params: {number: order.order_number}
     })
-
   } catch (e) {
     if (e.response?.status === 422) {
       errors.value = e.response.data.errors || {}
+      toast.error('Please fix the errors below.')
+    } else {
+      toast.error(e.response?.data?.message || 'Failed to place order.')
     }
   } finally {
     placing.value = false
